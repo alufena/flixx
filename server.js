@@ -6,24 +6,19 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Servir arquivos estáticos das pastas raiz e public
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
-// Rota de proxy para a API TMDB
 app.get('/api/tmdb/*', async (req, res) => {
   try {
     const endpoint = req.params[0]; // Captura tudo após /api/tmdb/
     const queryParams = new URLSearchParams(req.query);
     
-    // Adiciona a API key do arquivo .env
     queryParams.append('api_key', process.env.TMDB_API_KEY);
     
-    // Adiciona o parâmetro de idioma
     if (!queryParams.has('language')) {
       queryParams.append('language', 'pt-BR');
     }
