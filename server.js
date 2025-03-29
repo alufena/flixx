@@ -35,7 +35,6 @@ app.get('/api/tmdb/*', async (req, res) => {
   }
 });
 
-// Redirecionar arquivos HTML da pasta public
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
